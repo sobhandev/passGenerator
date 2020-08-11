@@ -1,0 +1,179 @@
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>تولید کننده کلمه عبور</title>
+	<style>
+		@font-face {
+			font-family: 'Iran Sans';
+			src: url('fonts/font.ttf');
+		}
+		* {
+			margin: 0;
+			padding: 0;
+			font-family: 'Iran Sans';
+		}
+
+		body {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			min-height: 100vh;
+			background: #f8f8f8;
+		}
+
+		.inputBox {
+			position: relative;
+			width: 450px;
+		}
+
+		.inputBox input {
+			font-family: Consolas;
+			cursor: default;
+			position: relative;
+			width: 100%;
+			height: 60px;
+			border: none;
+			margin: 15px 0 20px;
+			background: transparent;
+			outline: none;
+			padding: 0 24px;
+			font-size: 24px;
+			letter-spacing: 4;
+			box-sizing: border-box;
+			border-radius: 8px;
+			color: #333;
+			box-shadow: -4px -4px 10px rgba(255, 255, 255, 1),
+				inset 4px 4px 10px rgba(0, 0, 0, 0.05),
+				inset -4px -4px 10px rgba(255, 255, 255, 1),
+				4px 4px 10px rgba(0, 0, 0, 0.05);
+		}
+
+		.inputBox input::placeholder {
+			letter-spacing: 0;
+			font-family: 'iran Sans';
+			direction: rtl;
+		}
+
+		.inputBox .btn {
+			transition: .2s all;
+			position: relative;
+			cursor: pointer;
+			color: #fff;
+			background: #333;
+			font-size: 24px;
+			display: inline-block;
+			padding: 2px 15px;
+			border-radius: 8px;
+			user-select: none;
+		}
+
+		.btn-copy {
+			background: rgb(36, 97, 0) !important;
+		}
+
+		.inputBox .btn:active {
+			background: #9c27b0 ;
+		}
+
+		.btn-copy:active {
+			background: rgb(255, 166, 0) !important;
+			color: black  !important;
+		}
+
+		@media screen and (max-width: 550px) {
+			.inputBox {
+				text-align: center;
+				width: 100%;
+			}
+
+			.inputBox input {
+				width: 90%;
+				font-size: 21px;
+			}
+
+			.inputBox .btn,
+			.btn:nth-child(3) {
+				font-size: 16;
+			}
+		}
+		.tooltip{
+			position: relative;
+			display: inline-block;
+		}
+		.tooltip .tooltiptext{
+			transform: translateY(10px);
+			visibility: hidden;
+			width: 140px;
+			background-color: rgba(51, 51, 51, 0.719);
+			color: #fff;
+			text-align: center;
+			border-radius: 6px;
+			padding: 5px;
+			position: absolute;
+			z-index: 1;
+			bottom: 150%;
+			left: 50%;
+			margin-left: -75px;
+			opacity: 0;
+			transition: opacity 0.3s;
+			font-size: 13px;
+		}
+		.tooltip .tooltiptext::after{
+			content: '';
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			margin-left: -5px;
+			border-width: 5px;
+			border-style: solid;
+			border-color: #555 transparent transparent transparent ;
+		}
+		.tooltip:hover .tooltiptext{
+			visibility: visible;
+			opacity: 1;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="inputBox">
+		<input type="text" id="password" placeholder="ساخت کلمه عبور" readonly>
+		<div id="btn" class="btn">تولید رمز</div>
+		<div class="tooltip ">
+			<div  class="btn btn-copy" onmouseout="outFunc()">کپی
+				<span class="tooltiptext" id="myTooltip">کپی در حافظه موقت کیبورد</span>
+			</div>
+		</div>
+	</div>
+
+</body>
+<script>
+	const passGenerator = (lenght = 16) => {
+		let char = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~!@#$%^&*()_[]{}:";
+		let password = ""
+		let length = lenght
+		for (let i = 0; i < length; i++) {
+			let randomNumber = Math.floor(Math.random() * char.length)
+			password += char.substring(randomNumber, randomNumber + 1)
+		}
+		return password
+	}
+	document.getElementById('btn').addEventListener('click', (e) => {
+		document.getElementById('password').value = passGenerator()
+	})
+
+	document.querySelector('.btn-copy').addEventListener('click', () => { 
+		document.getElementById('password').select()
+		document.execCommand('copy')
+		let tooltip = document.getElementById('myTooltip')
+		tooltip.innerHTML = "!☺ کپی شد"
+	})
+	const outFunc = () => {
+		let tooltip = document.getElementById('myTooltip')
+		tooltip.innerHTML = 'کپی در حافظه موقت کیبورد'
+	}
+</script>
+
+</html>
